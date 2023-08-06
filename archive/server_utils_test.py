@@ -42,6 +42,7 @@ class TestServer(unittest.TestCase):
         try: 
             s.connect((test_host, test_port))
             s.sendall(b'\x16Q. Who is the villain?')
+            # 8. add sleep here
             data = s.recv(1024)
             assert data.decode() == "Lucius Malfoy", "Service responds correctly"
         finally:

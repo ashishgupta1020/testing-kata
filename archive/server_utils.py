@@ -25,8 +25,11 @@ def decode_request(data: bytes):
 def get_villains():
     # 2. introduce regression (also fix test)
     # villains = ["You-Know-Who", "Lucius Malfoy", "Gilderoy Lockhart", "Voldemort"]
+
+    # 7. add degradation under stress
+    # sleep(1)
     with open('villains.txt', 'r') as file:
-        villains = file.readlines()
+        villains = file.read().splitlines()
     return villains
     # 9. introduce chaos - remove file
 
@@ -68,8 +71,6 @@ def run_service(s: socket):
             data = conn.recv(int.from_bytes(size,byteorder='little'))
                 # if not data:
                     # break
-            # 7. add degradation under stress
-            # sleep(1)
             input = decode_request(data)
             output = process_request(input)
             conn.sendall(output)
@@ -78,11 +79,14 @@ def run_service(s: socket):
             print("Server needed to be closed..", error)
             break   
 
-# def broadcast_service(s: socket):
-#     while True:
-#         conn, addr = s.accept()
-#         print(f"Client connected for broadcast: {addr}")
-#         while True:
-#             if len(get_villains()) == 0:
-#                 conn.sendall(b"Voldy's gone mouldy, so now let's have fun!")
-#                 sleep(5)
+def broadcast_service(s: socket):
+    while True:
+        conn, addr = s.accept()
+        print(f"Client connected for broadcast: {addr}")
+        while True:
+            if len(get_villains()) == 0:
+                conn.sendall(b"Voldy's gone mouldy, so now let's have fun!")
+                sleep(5)
+            else:
+                conn.sendall(b"The war is on..")
+                sleep(5)

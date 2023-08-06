@@ -15,12 +15,14 @@ s.connect((host, id_port))
 # s.sendall(b'Who is the villain?')
 
 # 22 = 00010110 = \x16
+# 19 = 00010011 = \x13
 # s.sendall(b'\x16Q. Who is the villain?')
 # 6. introduce need for fuzz testing
 # s.sendall(b'\xfe\xff')
 
 # 8. testing with prod data, streaming client
-s.sendall(b'\x16Q. Who is the villain?' + b'\x16Q. Who is the villain?')
+s.sendall(b'\x13Who is the villain?' + b'\x13Who is the villain?')
+time.sleep(1)
 
 # 4. introduce missing functionality - client sends an unexpected request
 # s.sendall(b'Q. Are you the villain?')
