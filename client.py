@@ -11,6 +11,7 @@ start = time.time()
 s.connect((host, id_port))
 
 # 22 = 00010110 = \x16
+# 19 = 00010011 = \x13
 s.sendall(b'\x16Q. Who is the villain?')
 
 data = s.recv(1024)
