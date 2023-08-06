@@ -52,13 +52,9 @@ class TestServer(unittest.TestCase):
     def test_get_villains(self):
         assert len(get_villains()) == 3
 
-    # 5. fix test to account for mutation
     @patch('server_utils.get_villains')
     def test_process_request(self, get_villains):
         get_villains.return_value = ["Ron", "Harry", "Hermione"]
-        # assert process_request('Q. Who is the villain?') == b"Harry", "Process works correctly"
-        # assert process_request('Q. Who is the villain?') == b"Hermione", "Process works correctly"
-        # assert process_request('Q. Who is the villain?') == b"Ron", "Process works correctly"
         assert process_request('Q. Who is the villain?') == b"Harry", "Process works correctly"
         assert process_request('') == b"unknown", "Process works correctly with empty input"
 
